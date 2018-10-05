@@ -1,0 +1,17 @@
+<resources>
+
+    <string name="stor_static_api_url" translatable="false">https://api.hypothermic.nl</string>
+
+    <string name="app_name">Meefietsen</string>
+
+    <string name="title_home">Home</string>
+    <string name="title_friends">Contacts</string>
+    <string name="title_account">Account</string>
+
+    <!-- Strings related to login -->
+    <string name="activity_login_welkom">Welcome</string>
+    <string name="activity_login_introduction">Meefietsen is an app to easily arrange cycle ride-alongs with friends.</string>
+    <string name="activity_login_instruction">Please enter your phone number.</string>
+    <string name="activity_login_proceed" >Proceed</string>
+
+</resources>

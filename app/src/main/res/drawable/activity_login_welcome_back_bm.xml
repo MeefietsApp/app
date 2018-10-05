@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>-->
+        <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+            android:src="@drawable/activity_login_welcome_back_b"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter">
+        </bitmap>
+
+<!--<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="top|bottom"
+    android:src="@drawable/activity_login_welcome_back"
+    android:tileMode="disabled"></bitmap>-->
+
+    <!--</item>
+</layer-list>-->
