@@ -28,4 +28,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     implementation 'com.github.pinball83:masked-edittext:1.0.4'
+    implementation 'info.guardianproject.netcipher:netcipher:1.2'
 }

@@ -5,6 +5,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import nl.hypothermic.foscamlib.net.NetManager;
+import nl.hypothermic.meefietsen.async.GenericCallback;
+import nl.hypothermic.meefietsen.async.MessagedCallback;
 
 public class MeefietsClient {
 
@@ -17,7 +19,8 @@ public class MeefietsClient {
         return instance;
     }
 
-    public static final String url = "https://api.hypothermic.nl/";
+    //public static final String url = "http://149.202.45.240:7000/"; // temp fix voor dns propagation
+    public static final String url = "http://api.hypothermic.nl:7000/";
 
     private ExecutorService threadpool = Executors.newCachedThreadPool();
     private NetManager netman;
@@ -28,15 +31,46 @@ public class MeefietsClient {
         ;
     }
 
-    public void setLoginParameters(int telCountry, int telNum, String passwd) {
-        netman = new NetManager(telCountry, telNum, passwd);
+    public void setNetManager(NetManager netman) {
+        this.netman = netman;
+    }
+
+    public NetManager getNetManager() {
+        return netman;
     }
 
     // --- methods
 
-    public boolean isAuthenticated() {
-        return netman != null &&
-               netman.sessionToken != "" &&
-               netman.exec("auth/sync?", null) == "1";
+    public void doLogin(String passwd, final GenericCallback<Boolean> cb) {
+        this.netman.setPassword(passwd);
+        threadpool.execute(new Runnable() {
+            @Override
+            public void run() {
+                netman.sessionToken = netman.exec("auth/login?", null).trim() + "";
+                cb.onAction((netman.sessionToken.length() > 2));
+            }
+        });
+    }
+
+    public void doRegister(String passwd, final MessagedCallback<Boolean> cb) {
+        this.netman.setPassword(passwd);
+        threadpool.execute(new Runnable() {
+            @Override
+            public void run() {
+                int res = Integer.valueOf(netman.exec("auth/register?", null).trim());
+                System.out.println("RES:" + res);
+            }
+        });
+    }
+
+    public void isAuthenticated(final GenericCallback<Boolean> cb) {
+        threadpool.execute(new Runnable() {
+            @Override
+            public void run() {
+                cb.onAction((netman != null &&
+                             netman.sessionToken != "" &&
+                             netman.exec("auth/sync?", null).trim().equals("1")));
+            }
+        });
     }
 }

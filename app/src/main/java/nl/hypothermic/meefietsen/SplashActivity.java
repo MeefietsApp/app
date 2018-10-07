@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import nl.hypothermic.meefietsen.async.GenericCallback;
 import nl.hypothermic.meefietsen.core.MeefietsClient;
 
 public class SplashActivity extends AppCompatActivity {
@@ -19,15 +20,19 @@ public class SplashActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_splash);
 
-        new Runnable()  {
+        new Runnable() {
             @Override
             public void run() {
-                if (MeefietsClient.getInstance().isAuthenticated()) {
-                    startActivity(new Intent(act, FeedActivity.class));
-                } else {
-                    startActivity(new Intent(act, WelcomeActivity.class));
-                    // TODO start login activity???
-                }
+                MeefietsClient.getInstance().isAuthenticated(new GenericCallback<Boolean>() {
+                    @Override
+                    public void onAction(Boolean b) {
+                        if (b != null && b) {
+                            startActivity(new Intent(act, FeedActivity.class));
+                        } else {
+                            startActivity(new Intent(act, WelcomeActivity.class));
+                        }
+                    }
+                });
             }
         }.run();
     }

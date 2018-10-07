@@ -10,5 +10,7 @@
     <string name="activity_login_introduction" >Meefietsen is een app waarmee je gemakkelijk afspreekt om samen te fietsen met vrienden.</string>
     <string name="activity_login_instruction" >Voer uw telefoonnummer in</string>
     <string name="activity_login_proceed" >Verder</string>
+    <string name="activity_login_login">Login</string>
+    <string name="activity_login_login_instruction">Voer alstublieft uw wachtwoord in</string>
 
 </resources>

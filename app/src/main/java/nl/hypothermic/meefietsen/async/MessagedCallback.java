@@ -3,8 +3,8 @@ package nl.hypothermic.meefietsen.async;
 /**
  * Callback interface for deserialization
  */
-public interface GenericCallback<T extends Object> {
+public interface MessagedCallback<T extends Object> {
 
-	void onAction(T val);
+	void onAction(T val, String msg);
 
 }

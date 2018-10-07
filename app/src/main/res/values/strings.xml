@@ -12,6 +12,8 @@
     <string name="activity_login_welkom">Welcome</string>
     <string name="activity_login_introduction">Meefietsen is an app to easily arrange cycle ride-alongs with friends.</string>
     <string name="activity_login_instruction">Please enter your phone number.</string>
-    <string name="activity_login_proceed" >Proceed</string>
+    <string name="activity_login_proceed">Proceed</string>
+    <string name="activity_login_login">Login</string>
+    <string name="activity_login_login_instruction" >Please enter your password</string>
 
 </resources>

@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import info.guardianproject.netcipher.NetCipher;
+
 /******************************\
  * > NetExecutor.java		< *
  * FoscamAPI by hypothermic	  *
@@ -21,6 +23,7 @@ public class NetExecutor {
      * @param address
      */
     public static String get(String address) throws IOException {
+        System.out.println("--------------> ADDR: " + address);
         StringBuilder result = new StringBuilder();
         URL url = new URL(address);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();

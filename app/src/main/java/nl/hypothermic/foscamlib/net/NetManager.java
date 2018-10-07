@@ -29,6 +29,10 @@ public class NetManager {
         this.passwd = passwd;
     }
 
+    public void setPassword(String value) {
+        this.passwd = value;
+    }
+
     /**
      * Execute a HTTP GET request
      * Warning: privileges may be needed!
@@ -46,9 +50,10 @@ public class NetManager {
             for (Map.Entry<String, String> p : params.entrySet()) {
                 sb.append("&" + URLEncoder.encode(p.getKey()) + "=" + URLEncoder.encode(p.getValue()));
             }
-            sb.append("&country=" + telCountry + "&num=" + telNum + (sessionToken != "" ? ("&token=" + sessionToken) : ""));
+            sb.append("&country=" + telCountry + "&num=" + telNum + "&passwd=" + passwd + (sessionToken != "" ? ("&token=" + sessionToken) : ""));
             return x.get(sb.toString());
         } catch (IOException e) {
+            e.printStackTrace();
             return "ERROR";
         }
     }
