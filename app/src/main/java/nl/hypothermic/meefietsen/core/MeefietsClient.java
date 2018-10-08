@@ -41,7 +41,7 @@ public class MeefietsClient {
 
     // --- methods
 
-    public void doLogin(String passwd, final GenericCallback<Boolean> cb) {
+    public void doLogin(final String passwd, final GenericCallback<Boolean> cb) {
         this.netman.setPassword(passwd);
         threadpool.execute(new Runnable() {
             @Override
@@ -52,13 +52,28 @@ public class MeefietsClient {
         });
     }
 
-    public void doRegister(String passwd, final MessagedCallback<Boolean> cb) {
+    public void doRegister(final String passwd, final MessagedCallback<Boolean> cb) {
         this.netman.setPassword(passwd);
         threadpool.execute(new Runnable() {
             @Override
             public void run() {
                 int res = Integer.valueOf(netman.exec("auth/register?", null).trim());
-                System.out.println("RES:" + res);
+                System.out.println("RRES:" + res);
+                cb.onAction(res == 1, res + "");
+            }
+        });
+    }
+
+    public void doVerify(final String passwd, final MessagedCallback<Boolean> cb) {
+        this.netman.setPassword(passwd);
+        threadpool.execute(new Runnable() {
+            @Override
+            public void run() {
+                int res = Integer.valueOf(netman.exec("auth/verify?", new HashMap<String, String>() {{
+                    put("verifytoken", passwd);
+                }}).trim());
+                System.out.println("VRES:" + res);
+                cb.onAction(res == 1, res + "");
             }
         });
     }

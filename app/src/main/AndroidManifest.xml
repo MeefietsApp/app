@@ -47,6 +47,16 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/MeefietsAppThemaWit.NoTitle" />
+        <activity
+            android:name=".RegisterActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/MeefietsAppThemaWit.NoTitle" />
+        <activity
+            android:name="nl.hypothermic.VerifyActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/MeefietsAppThemaWit.NoTitle"></activity>
     </application>
 
 </manifest>

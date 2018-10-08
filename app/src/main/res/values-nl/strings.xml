@@ -12,5 +12,12 @@
     <string name="activity_login_proceed" >Verder</string>
     <string name="activity_login_login">Login</string>
     <string name="activity_login_login_instruction">Voer alstublieft uw wachtwoord in</string>
+    <string name="activity_register_title" >Registreren</string>
+    <string name="activity_register_instructions" >Bedenk een nieuw wachtwoord van minimaal 8 tekens:</string>
+    <string name="activity_register_proceed" >Registreren</string>
+    <string name="activity_register_legal" >Door te registreren gaat u akkoord met <font color="blue">MeefietsApp Servicevoorwaarden</font> en <font color="blue">Hypothermic TOS</font>. Ook erkent u dat u 16 jaar of ouder bent. <i>Klik hier om gerelateerde documenten te openen</i></string>
+    <string name="activity_verify_title" >Verifieer Account</string>
+    <string name="activity_verify_introduction" >Een SMS was verstuurd naar uw telfoonnummer. Voer de 6-cijferige verificatiecode hieronder in:</string>
+    <string name="activity_verify_proceed" >Verifieer</string>
 
 </resources>

@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.telephony.PhoneNumberFormattingTextWatcher;
-import android.telephony.PhoneNumberUtils;
 import android.view.View;
 
 import com.github.pinball83.maskededittext.MaskedEditText;
@@ -45,7 +43,8 @@ public class WelcomeActivity extends AppCompatActivity {
                                     MeefietsClient.getInstance().setNetManager(man);
                                     startActivity(new Intent(act, SplashActivity.class));
                                 } else if (res == -3) {
-                                    //TODO //startActivity(new Intent(act, RegisterActivity.class));
+                                    MeefietsClient.getInstance().setNetManager(man);
+                                    startActivity(new Intent(act, RegisterActivity.class));
                                 } else if (res == -4) {
                                     MeefietsClient.getInstance().setNetManager(man);
                                     startActivity(new Intent(act, LoginActivity.class));

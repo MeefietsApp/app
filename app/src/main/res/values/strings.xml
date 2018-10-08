@@ -14,6 +14,14 @@
     <string name="activity_login_instruction">Please enter your phone number.</string>
     <string name="activity_login_proceed">Proceed</string>
     <string name="activity_login_login">Login</string>
-    <string name="activity_login_login_instruction" >Please enter your password</string>
+    <string name="activity_login_login_instruction">Please enter your password</string>
+    <string name="activity_register_title">Register</string>
+    <string name="activity_register_instructions">Enter an unique password that consists of 8 characters:</string>
+    <string name="activity_register_proceed">Finish registration</string>
+    <string name="activity_register_legal">By registering, you agree to the <font color="blue">MeefietsApp Servicevoorwaarden</font> and <font color="blue">Hypothermic TOS</font>. You also acknowledge that you are 16 years or older. <i>Click to open accosiated documents</i></string>
+    <string name="stor_static_tos_url" translatable="false">https://www.hypothermic.nl/meefietsen/tos.html</string>
+    <string name="activity_verify_title" >Verify Account</string>
+    <string name="activity_verify_introduction" >A text message was sent to your phone number, enter the 6-number verification code below:</string>
+    <string name="activity_verify_proceed" >Finish verification</string>
 
 </resources>
