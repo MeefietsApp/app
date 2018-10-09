@@ -57,7 +57,7 @@ public class NetManager {
             return x.get(sb.toString());
         } catch (IOException e) {
             e.printStackTrace();
-            return "ERROR";
+            return "-201";
         }
     }
 }

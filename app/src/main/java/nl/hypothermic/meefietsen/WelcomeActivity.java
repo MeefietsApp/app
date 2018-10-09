@@ -10,10 +10,11 @@ import com.github.pinball83.maskededittext.MaskedEditText;
 
 import nl.hypothermic.foscamlib.net.NetManager;
 import nl.hypothermic.meefietsen.core.MeefietsClient;
+import nl.hypothermic.meefietsen.dialogs.ServerNotReachableDialog;
 
 public class WelcomeActivity extends AppCompatActivity {
 
-    private static Activity act;
+    public static Activity act;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,13 @@ public class WelcomeActivity extends AppCompatActivity {
                                 } else if (res == -4) {
                                     MeefietsClient.getInstance().setNetManager(man);
                                     startActivity(new Intent(act, LoginActivity.class));
+                                } else if (res == -201) {
+                                    act.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            new ServerNotReachableDialog().onCreateDialog(null).show();
+                                        }
+                                    });
                                 }
                                 System.out.println("--->" + res);
                             }
