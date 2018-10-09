@@ -5,8 +5,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import nl.hypothermic.foscamlib.net.NetManager;
+import nl.hypothermic.foscamlib.net.NetResponse;
+import nl.hypothermic.meefietsen.ResponseCode;
 import nl.hypothermic.meefietsen.async.GenericCallback;
 import nl.hypothermic.meefietsen.async.MessagedCallback;
+import nl.hypothermic.meefietsen.obj.account.Account;
+import nl.hypothermic.meefietsen.obj.auth.TelephoneNum;
 
 public class MeefietsClient {
 
@@ -39,7 +43,7 @@ public class MeefietsClient {
         return netman;
     }
 
-    // --- methods
+    // --- Authenticatie
 
     public void doLogin(final String passwd, final GenericCallback<Boolean> cb) {
         this.netman.setPassword(passwd);
@@ -50,6 +54,13 @@ public class MeefietsClient {
                 cb.onAction((netman.sessionToken.length() > 2));
             }
         });
+    }
+
+    public boolean doLoginSynchronously(final String passwd) {
+        this.netman.setPassword(passwd);
+        netman.sessionToken = netman.exec("auth/login?", null).trim() + "";
+        System.out.println("------> SYNC SES TOKEN: " + netman.sessionToken + " LEN: " + (netman.sessionToken.trim().length() > 5));
+        return netman.sessionToken.trim().length() > 5;
     }
 
     public void doRegister(final String passwd, final MessagedCallback<Boolean> cb) {
@@ -85,6 +96,32 @@ public class MeefietsClient {
                 cb.onAction((netman != null &&
                              netman.sessionToken != "" &&
                              netman.exec("auth/sync?", null).trim().equals("1")));
+            }
+        });
+    }
+
+    // --- Accounts
+
+    public void getAccount(final TelephoneNum target, final GenericCallback<NetResponse<Account>> cb) {
+        threadpool.execute(new Runnable() {
+            @Override
+            public void run() {
+                final NetResponse<Account> res = new NetResponse<>();
+                isAuthenticated(new GenericCallback<Boolean>() {
+                    @Override
+                    public void onAction(Boolean val) {
+                        if (val != null && val) {
+                            String ret = netman.exec("account/get?", new HashMap<String, String>() {{
+                                put("targetcountry", target.country + "");
+                                put("targetnum", target.number + "");
+                            }});
+                            System.out.println("ret: " + ret);
+                            //cb.onAction();
+                        } else {
+                            res.code = ResponseCode.INTERNAL_ERR_NOT_AUTH;
+                        }
+                    }
+                });
             }
         });
     }

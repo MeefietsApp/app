@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import nl.hypothermic.meefietsen.core.MeefietsClient;
+import nl.hypothermic.meefietsen.obj.auth.TelephoneNum;
 
 /******************************\
  * > NetManager.java		< *
@@ -20,6 +21,7 @@ public class NetManager {
     private final NetExecutor x = new NetExecutor();
 
     private int telCountry, telNum;
+    public TelephoneNum telephoneNum;
     private String passwd;
     public String sessionToken = "";
 
@@ -27,6 +29,7 @@ public class NetManager {
         this.telCountry = telCountry;
         this.telNum = telNum;
         this.passwd = passwd;
+        this.telephoneNum = new TelephoneNum(telCountry, telNum);
     }
 
     public void setPassword(String value) {

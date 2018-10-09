@@ -3,7 +3,6 @@ package nl.hypothermic.meefietsen.core;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import nl.hypothermic.meefietsen.R;
 import nl.hypothermic.meefietsen.SplashActivity;
 
 public class ConfigurationLoader {
@@ -14,9 +13,9 @@ public class ConfigurationLoader {
         return prefs.getString(key, defValue);
     }
 
-    public static void setString(String key, String defValue) {
+    public static void setString(String key, String value) {
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(key, defValue);
+        editor.putString(key, value);
         editor.commit();
     }
 }

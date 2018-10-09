@@ -12,6 +12,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.common.hash.Hashing;
+
+import java.nio.charset.StandardCharsets;
+
 import nl.hypothermic.VerifyActivity;
 import nl.hypothermic.meefietsen.async.MessagedCallback;
 import nl.hypothermic.meefietsen.core.MeefietsClient;
@@ -37,20 +41,25 @@ public class RegisterActivity extends AppCompatActivity {
         findViewById(R.id.btnRegister).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String input = ((EditText) findViewById(R.id.fieldRegisterPassword)).getText().toString();
-                if (input.length() >= 8) {
-                    MeefietsClient.getInstance().doRegister(input, new MessagedCallback<Boolean>() {
-                        @Override
-                        public void onAction(Boolean val, String msg) {
-                            if ((val != null && val) || msg.trim().equals("-6")) {
-                                startActivity(new Intent(act, VerifyActivity.class));
-                            } else {
-                                onRegisterFailed(msg);
+                try {
+                    final String input = Hashing.sha512().hashString(((EditText) findViewById(R.id.fieldRegisterPassword)).getText().toString(), StandardCharsets.UTF_8).toString();
+                    if (input.length() >= 8) {
+                        MeefietsClient.getInstance().doRegister(input, new MessagedCallback<Boolean>() {
+                            @Override
+                            public void onAction(Boolean val, String msg) {
+                                if ((val != null && val) || msg.trim().equals("-6")) {
+                                    startActivity(new Intent(act, VerifyActivity.class));
+                                } else {
+                                    onRegisterFailed(msg);
+                                }
                             }
-                        }
-                    });
-                } else {
-                    onRegisterFailed("het wachtwoord moet 8 karakters bevatten.");
+                        });
+                    } else {
+                        onRegisterFailed("het wachtwoord moet 8 karakters bevatten.");
+                    }
+                } catch (Exception x) {
+                    x.printStackTrace();
+                    onRegisterFailed("unsupported encoding: utf-8??");
                 }
             }
         });
