@@ -1,4 +1,4 @@
-package nl.hypothermic;
+package nl.hypothermic.meefietsen;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,8 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import nl.hypothermic.meefietsen.R;
-import nl.hypothermic.meefietsen.SplashActivity;
 import nl.hypothermic.meefietsen.async.GenericCallback;
 import nl.hypothermic.meefietsen.async.MessagedCallback;
 import nl.hypothermic.meefietsen.core.MeefietsClient;

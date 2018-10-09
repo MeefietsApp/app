@@ -16,7 +16,6 @@ import com.google.common.hash.Hashing;
 
 import java.nio.charset.StandardCharsets;
 
-import nl.hypothermic.VerifyActivity;
 import nl.hypothermic.meefietsen.async.MessagedCallback;
 import nl.hypothermic.meefietsen.core.MeefietsClient;
 
