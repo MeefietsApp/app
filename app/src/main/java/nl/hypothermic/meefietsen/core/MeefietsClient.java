@@ -9,8 +9,8 @@ import nl.hypothermic.foscamlib.net.NetResponse;
 import nl.hypothermic.meefietsen.ResponseCode;
 import nl.hypothermic.meefietsen.async.GenericCallback;
 import nl.hypothermic.meefietsen.async.MessagedCallback;
-import nl.hypothermic.meefietsen.obj.account.Account;
-import nl.hypothermic.meefietsen.obj.auth.TelephoneNum;
+import nl.hypothermic.mfsrv.obj.account.Account;
+import nl.hypothermic.mfsrv.obj.auth.TelephoneNum;
 
 public class MeefietsClient {
 
@@ -28,6 +28,7 @@ public class MeefietsClient {
 
     private ExecutorService threadpool = Executors.newCachedThreadPool();
     private NetManager netman;
+    public Account localAccount = new Account(new TelephoneNum(00, 00000000), "...");
 
     // --- set+get
 
@@ -52,6 +53,12 @@ public class MeefietsClient {
             public void run() {
                 netman.sessionToken = netman.exec("auth/login?", null).trim() + "";
                 cb.onAction((netman.sessionToken.length() > 2));
+                updateLocalAccount(new GenericCallback<Boolean>() {
+                    @Override
+                    public void onAction(Boolean val) {
+                        ;
+                    }
+                });
             }
         });
     }
@@ -102,6 +109,42 @@ public class MeefietsClient {
 
     // --- Accounts
 
+    public void updateLocalAccount(final GenericCallback<Boolean> cb) {
+        threadpool.execute(new Runnable() {
+            @Override
+            public void run() {
+                isAuthenticated(new GenericCallback<Boolean>() {
+                    @Override
+                    public void onAction(Boolean val) {
+                        if (val != null && val) {
+                            String ret = netman.exec("account/get?", new HashMap<String, String>() {{
+                                put("targetcountry", netman.telephoneNum.country + "");
+                                put("targetnum", netman.telephoneNum.number + "");
+                            }});
+                            System.out.println("ULA RET: " + ret.substring(1));
+                            if (ret.startsWith("1")) {
+                                try {
+                                    System.out.println("DECODE: " + Account.fromSerializedString(ret.substring(1)).toString());
+                                    localAccount = Account.fromSerializedString(ret.substring(1));
+                                    cb.onAction(true);
+                                } catch (Exception x) {
+                                    x.printStackTrace();
+                                    cb.onAction(false);
+                                }
+                            } else {
+                                System.out.println("ULA INVALID RS");
+                                cb.onAction(false);
+                            }
+                        } else {
+                            System.out.println("ULA FAILED");
+                            cb.onAction(false);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
     public void getAccount(final TelephoneNum target, final GenericCallback<NetResponse<Account>> cb) {
         threadpool.execute(new Runnable() {
             @Override
@@ -115,7 +158,7 @@ public class MeefietsClient {
                                 put("targetcountry", target.country + "");
                                 put("targetnum", target.number + "");
                             }});
-                            System.out.println("ret: " + ret);
+                            System.out.println("GETACC RET: " + ret);
                             //cb.onAction();
                         } else {
                             res.code = ResponseCode.INTERNAL_ERR_NOT_AUTH;

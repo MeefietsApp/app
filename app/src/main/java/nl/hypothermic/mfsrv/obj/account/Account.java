@@ -1,4 +1,6 @@
-package nl.hypothermic.meefietsen.obj.account;
+package nl.hypothermic.mfsrv.obj.account;
+
+import android.org.apache.commons.codec.DecoderException;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,15 +8,17 @@ import java.io.Serializable;
 
 import nl.hypothermic.meefietsen.core.FileIO;
 import nl.hypothermic.meefietsen.obj.NetworkObject;
-import nl.hypothermic.meefietsen.obj.auth.TelephoneNum;
+import nl.hypothermic.mfsrv.obj.auth.TelephoneNum;
 
 public class Account implements Serializable, NetworkObject {
+
+    static final long serialVersionUID = 1L;
 
     public static Account fromFile(File path) throws ClassNotFoundException, IOException {
         return (Account) FileIO.deserialize(path);
     }
 
-    public static Account fromSerializedString(String str) throws ClassNotFoundException, IOException {
+    public static Account fromSerializedString(String str) throws ClassNotFoundException, IOException, DecoderException {
         return (Account) FileIO.deserializeFromString(str);
     }
 

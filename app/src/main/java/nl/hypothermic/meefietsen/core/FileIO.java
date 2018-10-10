@@ -63,11 +63,20 @@ public final class FileIO {
         ObjectOutputStream out = new ObjectOutputStream(baos);
         out.writeObject(obj);
         out.close();
-        return baos.toString();
+        return android.org.apache.commons.codec.binary.Hex.encodeHexString(baos.toByteArray());
     }
 
-    public static final Serializable deserializeFromString(String str) throws IOException, ClassNotFoundException {
-        ByteArrayInputStream bais = new ByteArrayInputStream(str.getBytes());
+    public static final Serializable deserializeFromString(String str) throws IOException, ClassNotFoundException, android.org.apache.commons.codec.DecoderException {
+        byte[] bytes = android.org.apache.commons.codec.binary.Hex.decodeHex(str);
+        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+        ObjectInputStream in = new ObjectInputStream(bais);
+        Serializable ser = (Serializable) in.readObject();
+        in.close();
+        return ser;
+    }
+
+    public static final Serializable deserializeFromByteArray(byte[] bytes) throws IOException, ClassNotFoundException {
+        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
         ObjectInputStream in = new ObjectInputStream(bais);
         Serializable ser = (Serializable) in.readObject();
         in.close();

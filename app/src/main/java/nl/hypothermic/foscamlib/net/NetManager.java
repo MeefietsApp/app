@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import nl.hypothermic.meefietsen.core.MeefietsClient;
-import nl.hypothermic.meefietsen.obj.auth.TelephoneNum;
+import nl.hypothermic.mfsrv.obj.auth.TelephoneNum;
 
 /******************************\
  * > NetManager.java		< *

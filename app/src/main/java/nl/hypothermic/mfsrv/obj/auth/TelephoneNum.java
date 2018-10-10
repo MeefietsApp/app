@@ -1,10 +1,12 @@
-package nl.hypothermic.meefietsen.obj.auth;
+package nl.hypothermic.mfsrv.obj.auth;
 
 import java.io.Serializable;
 
 import nl.hypothermic.meefietsen.obj.NetworkObject;
 
 public class TelephoneNum implements Serializable, NetworkObject {
+
+    static final long serialVersionUID = 1L;
 
     public final int country;
 
@@ -13,6 +15,10 @@ public class TelephoneNum implements Serializable, NetworkObject {
     public TelephoneNum(int country, int number) {
         this.country = country;
         this.number = number;
+    }
+
+    public String toFormattedString() {
+        return "+" + country + " " + number;
     }
 
     @Override

@@ -1,13 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".frags.AccountFragment">
 
-    <TextView
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/fragAccCtx"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Account" />
+        android:layout_height="match_parent">
 
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginRight="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimaryDark"
+                        android:orientation="horizontal"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="4dp">
+
+                        <ImageView
+                            android:id="@+id/accountIcon"
+                            android:layout_width="72dp"
+                            android:layout_height="72dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_person_white_128dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/accountTel"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="..."
+                                android:textAlignment="viewStart"
+                                android:textColor="@color/colorTextW"
+                                android:textSize="22sp" />
+
+                            <TextView
+                                android:id="@+id/accountName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="..."
+                                android:textColor="@color/colorTextW"
+                                android:textStyle="italic" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+    </android.support.constraint.ConstraintLayout>
 </FrameLayout>

@@ -6,7 +6,10 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import nl.hypothermic.meefietsen.async.GenericCallback;
+import nl.hypothermic.meefietsen.core.MeefietsClient;
 import nl.hypothermic.meefietsen.frags.AccountFragment;
 import nl.hypothermic.meefietsen.frags.ContactsFragment;
 import nl.hypothermic.meefietsen.frags.HomeFragment;
@@ -58,15 +61,23 @@ public class FeedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_feed);
         act = this;
 
-        BottomNavigationView nav = findViewById(R.id.navigation);
-        nav.setSelectedItemId(R.id.navigation_home);
-        nav.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        ((BottomNavigationView) findViewById(R.id.navigation)).setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        ((BottomNavigationView) findViewById(R.id.navigation)).setSelectedItemId(R.id.navigation_home);
         showFragment(homeFragment);
+
+        final MeefietsClient inst = MeefietsClient.getInstance();
+        inst.updateLocalAccount(new GenericCallback<Boolean>() {
+            @Override
+            public void onAction(Boolean val) {
+                ((TextView) findViewById(R.id.accountTel)).setText(inst.localAccount.num.toFormattedString());
+                ((TextView) findViewById(R.id.accountName)).setText(inst.localAccount.userName);
+            }
+        });
     }
 
     private void showFragment(Fragment fragment) {
@@ -76,7 +87,7 @@ public class FeedActivity extends AppCompatActivity {
                 .hide(accountFragment)
                 .commit();
         getFragmentManager().beginTransaction()
-                .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                .setCustomAnimations(R.anim.anim_fade_in, R.anim.anim_fade_in)
                 .show(fragment)
                 .commit();
     }
