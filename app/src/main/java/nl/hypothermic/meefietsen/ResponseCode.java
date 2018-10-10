@@ -12,6 +12,7 @@ public enum ResponseCode {
 
     INTERNAL_ERR_GENERIC(-101),
     INTERNAL_ERR_NOT_AUTH(-102),
+    INTERNEL_ERR_NOT_SET(-103),
 
     ;private int value;
 

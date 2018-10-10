@@ -7,9 +7,13 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import nl.hypothermic.meefietsen.FeedActivity;
 import nl.hypothermic.meefietsen.R;
+import nl.hypothermic.meefietsen.async.GenericCallback;
+import nl.hypothermic.meefietsen.core.MeefietsClient;
+import nl.hypothermic.meefietsen.dialogs.InputSmallTextDialog;
 
 public class AccountFragment extends Fragment {
 
@@ -26,6 +30,37 @@ public class AccountFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        FeedActivity.act.setAccountFragment(this);
+        final MeefietsClient inst = MeefietsClient.getInstance();
+        final FeedActivity act = FeedActivity.act;
+        act.setAccountFragment(this);
+        act.findViewById(R.id.accountDetails).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new InputSmallTextDialog(getString(R.string.activity_account_manage_name_title),
+                                         getString(R.string.dialog_std_inputsmalltext_positive),
+                                         getString(R.string.dialog_std_inputsmalltext_negative),
+                                         new GenericCallback<String>() {
+                    @Override
+                    public void onAction(String val) {
+                        inst.accountManageSetName(val, new GenericCallback<Boolean>() {
+                            @Override
+                            public void onAction(Boolean val) {
+                                if (val) {
+                                    inst.updateLocalAccount(new GenericCallback<Boolean>() {
+                                        @Override
+                                        public void onAction(Boolean val) {
+                                            if (val) {
+                                                ((TextView) act.findViewById(R.id.accountTel)).setText(inst.localAccount.num.toFormattedString());
+                                                ((TextView) act.findViewById(R.id.accountName)).setText(inst.localAccount.userName);
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                }).onCreateDialog(null).show();
+            }
+        });
     }
 }

@@ -121,10 +121,8 @@ public class MeefietsClient {
                                 put("targetcountry", netman.telephoneNum.country + "");
                                 put("targetnum", netman.telephoneNum.number + "");
                             }});
-                            System.out.println("ULA RET: " + ret.substring(1));
                             if (ret.startsWith("1")) {
                                 try {
-                                    System.out.println("DECODE: " + Account.fromSerializedString(ret.substring(1)).toString());
                                     localAccount = Account.fromSerializedString(ret.substring(1));
                                     cb.onAction(true);
                                 } catch (Exception x) {
@@ -132,11 +130,9 @@ public class MeefietsClient {
                                     cb.onAction(false);
                                 }
                             } else {
-                                System.out.println("ULA INVALID RS");
                                 cb.onAction(false);
                             }
                         } else {
-                            System.out.println("ULA FAILED");
                             cb.onAction(false);
                         }
                     }
@@ -159,12 +155,34 @@ public class MeefietsClient {
                                 put("targetnum", target.number + "");
                             }});
                             System.out.println("GETACC RET: " + ret);
-                            //cb.onAction();
+                            if (ret.startsWith("1")) {
+                                try {
+                                    res.object = Account.fromSerializedString(ret.substring(1));
+                                    res.code = ResponseCode.SUCCESS;
+                                } catch (Exception x) {
+                                    x.printStackTrace();
+                                    res.code = ResponseCode.INTERNAL_ERR_GENERIC;
+                                }
+                            }
                         } else {
                             res.code = ResponseCode.INTERNAL_ERR_NOT_AUTH;
                         }
+                        cb.onAction(res);
                     }
                 });
+            }
+        });
+    }
+
+    public void accountManageSetName(final String newValue, final GenericCallback<Boolean> cb) {
+        threadpool.execute(new Runnable() {
+            @Override
+            public void run() {
+                cb.onAction((netman != null &&
+                        netman.sessionToken != "" &&
+                        netman.exec("account/manage/setname?", new HashMap<String, String>() {{
+                            put("value", newValue);
+                        }}).trim().equals("1")));
             }
         });
     }

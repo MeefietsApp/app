@@ -19,5 +19,9 @@
     <string name="activity_verify_title" >Verifieer Account</string>
     <string name="activity_verify_introduction" >Een SMS was verstuurd naar uw telfoonnummer. Voer de 6-cijferige verificatiecode hieronder in:</string>
     <string name="activity_verify_proceed" >Verifieer</string>
+    <string name="dialog_std_inputsmalltext_title">Voer tekst in</string>
+    <string name="dialog_std_inputsmalltext_positive">OK</string>
+    <string name="dialog_std_inputsmalltext_negative">Annuleren</string>
+    <string name="activity_account_manage_name_title">Verander uw gebruikersnaam</string>
 
 </resources>

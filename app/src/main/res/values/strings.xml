@@ -20,8 +20,15 @@
     <string name="activity_register_proceed">Finish registration</string>
     <string name="activity_register_legal">By registering, you agree to the <font color="blue">MeefietsApp Servicevoorwaarden</font> and <font color="blue">Hypothermic TOS</font>. You also acknowledge that you are 16 years or older. <i>Click to open accosiated documents</i></string>
     <string name="stor_static_tos_url" translatable="false">https://www.hypothermic.nl/meefietsen/tos.html</string>
-    <string name="activity_verify_title" >Verify Account</string>
-    <string name="activity_verify_introduction" >A text message was sent to your phone number, enter the 6-number verification code below:</string>
-    <string name="activity_verify_proceed" >Finish verification</string>
+    <string name="activity_verify_title">Verify Account</string>
+    <string name="activity_verify_introduction">A text message was sent to your phone number, enter the 6-number verification code below:</string>
+    <string name="activity_verify_proceed">Finish verification</string>
+    <string name="dialog_std_inputsmalltext_title">Enter value</string>
+    <string name="dialog_std_inputsmalltext_positive">OK</string>
+    <string name="dialog_std_inputsmalltext_negative">Cancel</string>
+    <string name="activity_account_manage_name_title">Change your username</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

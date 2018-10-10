@@ -32,4 +32,6 @@ dependencies {
     implementation 'info.guardianproject.netcipher:netcipher:1.2'
     api 'com.google.guava:guava:26.0-android'
     implementation files('libs/commons-codec-1.11-rep.jar')
+    implementation 'com.android.support:cardview-v7:27.1.1'
+    implementation 'org.osmdroid:osmdroid-android:6.0.2'
 }

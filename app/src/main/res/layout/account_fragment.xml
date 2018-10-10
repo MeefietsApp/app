@@ -51,8 +51,9 @@
                             android:src="@drawable/ic_person_white_128dp" />
 
                         <LinearLayout
+                            android:id="@+id/accountDetails"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
@@ -67,11 +68,13 @@
 
                             <TextView
                                 android:id="@+id/accountName"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:text="..."
                                 android:textColor="@color/colorTextW"
                                 android:textStyle="italic" />
+
                         </LinearLayout>
 
                     </LinearLayout>
