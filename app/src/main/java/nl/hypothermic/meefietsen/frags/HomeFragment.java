@@ -37,8 +37,8 @@ public class HomeFragment extends Fragment {
         events.setLayoutManager(new LinearLayoutManager(FeedActivity.act.getBaseContext()));
         events.setAdapter(new EventViewAdapter(ClientEventManager.getInstance().getEvents()));
 
-        ClientEventManager.getInstance().addEvent(new EventBuilder<MeefietsEvent>(new MeefietsEvent()).setName("Voorbeeld event 1"));
-        ClientEventManager.getInstance().addEvent(new EventBuilder<MeefietsEvent>(new MeefietsEvent()).setName("Voorbeeld event 2"));
-        ClientEventManager.getInstance().addEvent(new EventBuilder<MeefietsEvent>(new MeefietsEvent()).setName("Voorbeeld event 3"));
+        ClientEventManager.getInstance().addEvent(new EventBuilder<MeefietsEvent>(new MeefietsEvent()).setName("Voorbeeld event 1").build());
+        ClientEventManager.getInstance().addEvent(new EventBuilder<MeefietsEvent>(new MeefietsEvent()).setName("Paul Elstak: 90s party").setLocation("Zaal Dijk").setTime(1539462600).build());
+        ClientEventManager.getInstance().addEvent(new EventBuilder<MeefietsEvent>(new MeefietsEvent()).setName("Oktoberfest").setLocation("Alteveer").setTime(1539456300).build());
     }
 }

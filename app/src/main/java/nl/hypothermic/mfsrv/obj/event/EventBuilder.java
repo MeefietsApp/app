@@ -18,6 +18,11 @@ public class EventBuilder<T extends MeefietsEvent> {
         return this;
     }
 
+    public EventBuilder setTime(long epoch) {
+        event.eventEpochTime = epoch;
+        return this;
+    }
+
     public T build() {
         return event;
     }

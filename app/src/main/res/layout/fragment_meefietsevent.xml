@@ -20,19 +20,41 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <TextView
-                android:id="@+id/event_name"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Fout bij het laden van dit evenement."
-                android:textColor="@color/colorTextB"
-                android:textSize="20sp" />
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/event_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Fout bij het laden van dit evenement."
+                    android:textColor="@color/colorTextB"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/event_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|right"
+                    android:layout_weight="1"
+                    android:gravity="bottom|right"
+                    android:text="22:00"
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/colorTextG"
+                    android:textSize="24sp"
+                    android:visibility="invisible" />
+            </LinearLayout>
 
             <View
                 android:id="@+id/seperator"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
                 android:background="@color/colorAccent"
                 android:paddingLeft="0dp"
                 android:paddingTop="0dp"
@@ -43,6 +65,12 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/strWelcomeTitle" />
+
+            <TextView
+                android:id="@+id/event_loc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="italic" />
 
         </LinearLayout>
 

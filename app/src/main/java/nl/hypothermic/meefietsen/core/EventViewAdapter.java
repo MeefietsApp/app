@@ -8,27 +8,42 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import nl.hypothermic.meefietsen.R;
 import nl.hypothermic.mfsrv.obj.event.Event;
+import nl.hypothermic.mfsrv.obj.event.MeefietsEvent;
 
-public class EventViewAdapter extends RecyclerView.Adapter<EventViewAdapter.EventViewHolder> {
+public class EventViewAdapter<T extends Event> extends RecyclerView.Adapter<EventViewAdapter.EventViewHolder> {
 
-    private ArrayList<Event> events;
+    private static final DateFormat shortDateFormat = new SimpleDateFormat("HH:mm");
 
-    public EventViewAdapter(ArrayList<Event> persons) {
+    private ArrayList<T> events;
+
+    public EventViewAdapter(ArrayList<T> persons) {
         this.events = persons;
     }
 
     public static class EventViewHolder extends RecyclerView.ViewHolder {
         public CardView card;
         public TextView eventName;
+        public TextView eventLocation;
+        public TextView eventTime;
 
         public EventViewHolder(View view) {
             super(view);
             card = view.findViewById(R.id.card);
             eventName = view.findViewById(R.id.event_name);
+            eventLocation = view.findViewById(R.id.event_loc);
+            eventTime = view.findViewById(R.id.event_time);
+        }
+
+        public void setTime(String formattedTime) {
+            this.eventTime.setText(formattedTime);
+            this.eventTime.setVisibility(View.VISIBLE);
         }
     }
 
@@ -45,7 +60,19 @@ public class EventViewAdapter extends RecyclerView.Adapter<EventViewAdapter.Even
 
     @Override
     public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
-        holder.eventName.setText(events.get(position).getIdentifier());
+        Event e = events.get(position);
+        holder.eventName.setText(e.getIdentifier());
+        if (events.get(position) instanceof MeefietsEvent) {
+            MeefietsEvent me = (MeefietsEvent) e;
+            if (me.eventLocation != null) {
+                holder.eventLocation.setText(me.eventLocation);
+            } else {
+                holder.eventLocation.setHeight(0);
+            }
+            if (me.eventEpochTime > 0) {
+                holder.setTime(shortDateFormat.format(new Date(me.eventEpochTime * 1000)));
+            }
+        }
     }
 
     @Override
