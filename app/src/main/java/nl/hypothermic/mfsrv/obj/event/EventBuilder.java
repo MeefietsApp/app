@@ -8,13 +8,17 @@ public class EventBuilder<T extends MeefietsEvent> {
         this.event = event;
     }
 
-    public T setName(String name) {
+    public EventBuilder setName(String name) {
         event.eventName = name;
-        return event;
+        return this;
     }
 
-    public T setLocation(String location) {
+    public EventBuilder setLocation(String location) {
         event.eventLocation = location;
+        return this;
+    }
+
+    public T build() {
         return event;
     }
 }
