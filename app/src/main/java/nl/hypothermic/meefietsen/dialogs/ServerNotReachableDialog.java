@@ -6,6 +6,7 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import nl.hypothermic.meefietsen.SplashActivity;
 import nl.hypothermic.meefietsen.WelcomeActivity;
 
 public class ServerNotReachableDialog extends DialogFragment {
@@ -16,6 +17,7 @@ public class ServerNotReachableDialog extends DialogFragment {
         builder.setMessage("Server not reachable.")
                 .setPositiveButton("Exit", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        SplashActivity.act.finishAffinity();
                         android.os.Process.killProcess(android.os.Process.myPid());
                         System.exit(1);
                     }
