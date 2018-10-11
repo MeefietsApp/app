@@ -12,6 +12,7 @@ import nl.hypothermic.meefietsen.core.MeefietsClient;
 
 public class SplashActivity extends AppCompatActivity {
 
+    public static final long BACK_PRESS_TIMEOUT = 700; // ms
     public static Activity act;
 
     @Override

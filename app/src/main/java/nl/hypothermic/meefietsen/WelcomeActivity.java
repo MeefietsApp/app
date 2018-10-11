@@ -68,4 +68,15 @@ public class WelcomeActivity extends AppCompatActivity {
             }
         });
     }
+
+    private long lastBackPress = 0;
+
+    @Override
+    public void onBackPressed() {
+        if (lastBackPress + SplashActivity.BACK_PRESS_TIMEOUT > System.currentTimeMillis()) {
+            this.finishAffinity();
+        } else {
+            lastBackPress = System.currentTimeMillis();
+        }
+    }
 }
