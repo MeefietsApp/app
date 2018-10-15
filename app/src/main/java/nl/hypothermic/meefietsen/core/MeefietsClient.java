@@ -218,4 +218,31 @@ public class MeefietsClient {
             }
         });
     }
+
+    public void deleteContact(final TelephoneNum target, final GenericCallback<Boolean> cb) {
+        threadpool.execute(new Runnable() {
+            @Override
+            public void run() {
+                isAuthenticated(new GenericCallback<Boolean>() {
+                    @Override
+                    public void onAction(Boolean val) {
+                        if (val != null && val) {
+                            String ret = netman.exec("account/contacts/delete?", new HashMap<String, String>() {{
+                                put("targetcountry", target.country + "");
+                                put("targetnum", target.number + "");
+                            }});
+                            System.out.println("DELCONTACT RET: " + ret);
+                            boolean succeeded = (ret.trim().equals("1"));
+                            cb.onAction(succeeded);
+                            if (succeeded) {
+                                ClientContactManager.getInstance().deleteContact(target);
+                            }
+                        } else {
+                            cb.onAction(false);
+                        }
+                    }
+                });
+            }
+        });
+    }
 }
