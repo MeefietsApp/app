@@ -9,6 +9,7 @@ import nl.hypothermic.foscamlib.net.NetResponse;
 import nl.hypothermic.meefietsen.ResponseCode;
 import nl.hypothermic.meefietsen.async.GenericCallback;
 import nl.hypothermic.meefietsen.async.MessagedCallback;
+import nl.hypothermic.mfsrv.obj.NetArrayList;
 import nl.hypothermic.mfsrv.obj.account.Account;
 import nl.hypothermic.mfsrv.obj.auth.TelephoneNum;
 
@@ -179,10 +180,41 @@ public class MeefietsClient {
             @Override
             public void run() {
                 cb.onAction((netman != null &&
-                        netman.sessionToken != "" &&
-                        netman.exec("account/manage/setname?", new HashMap<String, String>() {{
-                            put("value", newValue);
-                        }}).trim().equals("1")));
+                             netman.sessionToken != "" &&
+                             netman.exec("account/manage/setname?", new HashMap<String, String>() {{
+                                 put("value", newValue);
+                             }}).trim().equals("1")
+                ));
+            }
+        });
+    }
+
+    public void getContacts(final GenericCallback<NetResponse<NetArrayList<TelephoneNum>>> cb) {
+        threadpool.execute(new Runnable() {
+            @Override
+            public void run() {
+                final NetResponse<NetArrayList<TelephoneNum>> res = new NetResponse<>();
+                isAuthenticated(new GenericCallback<Boolean>() {
+                    @Override
+                    public void onAction(Boolean val) {
+                        if (val != null && val) {
+                            String ret = netman.exec("account/contacts/get?", null);
+                            System.out.println("GETCTL RET: " + ret);
+                            if (ret.startsWith("1")) {
+                                try {
+                                    res.object = NetArrayList.fromSerializedString(ret.substring(1));
+                                    res.code = ResponseCode.SUCCESS;
+                                } catch (Exception x) {
+                                    x.printStackTrace();
+                                    res.code = ResponseCode.INTERNAL_ERR_GENERIC;
+                                }
+                            }
+                        } else {
+                            res.code = ResponseCode.INTERNAL_ERR_NOT_AUTH;
+                        }
+                        cb.onAction(res);
+                    }
+                });
             }
         });
     }
