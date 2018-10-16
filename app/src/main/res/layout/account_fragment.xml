@@ -47,7 +47,7 @@
                             android:id="@+id/accountIcon"
                             android:layout_width="72dp"
                             android:layout_height="72dp"
-                            android:layout_weight="1"
+                            android:layout_weight="0.5"
                             android:src="@drawable/ic_person_white_128dp" />
 
                         <LinearLayout

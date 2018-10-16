@@ -20,6 +20,7 @@ import nl.hypothermic.mfsrv.obj.event.MeefietsEvent;
 public class EventViewAdapter<T extends Event> extends RecyclerView.Adapter<EventViewAdapter.EventViewHolder> {
 
     private static final DateFormat shortDateFormat = new SimpleDateFormat("HH:mm");
+    private static final DateFormat ddmmDateFormat = new SimpleDateFormat("dd-MM");
 
     private ArrayList<T> events;
 
@@ -32,6 +33,7 @@ public class EventViewAdapter<T extends Event> extends RecyclerView.Adapter<Even
         public TextView eventName;
         public TextView eventLocation;
         public TextView eventTime;
+        public TextView eventDate;
 
         public EventViewHolder(View view) {
             super(view);
@@ -39,11 +41,17 @@ public class EventViewAdapter<T extends Event> extends RecyclerView.Adapter<Even
             eventName = view.findViewById(R.id.event_name);
             eventLocation = view.findViewById(R.id.event_loc);
             eventTime = view.findViewById(R.id.event_time);
+            eventDate = view.findViewById(R.id.event_date);
         }
 
         public void setTime(String formattedTime) {
             this.eventTime.setText(formattedTime);
             this.eventTime.setVisibility(View.VISIBLE);
+        }
+
+        public void setDate(String formattedDate) {
+            this.eventDate.setText(formattedDate);
+            this.eventDate.setVisibility(View.VISIBLE);
         }
     }
 
@@ -70,7 +78,9 @@ public class EventViewAdapter<T extends Event> extends RecyclerView.Adapter<Even
                 holder.eventLocation.setHeight(0);
             }
             if (me.eventEpochTime > 0) {
-                holder.setTime(shortDateFormat.format(new Date(me.eventEpochTime * 1000)));
+                Date date = new Date(me.eventEpochTime * 1000);
+                holder.setTime(shortDateFormat.format(date));
+                holder.setDate(ddmmDateFormat.format(date));
             }
         }
     }

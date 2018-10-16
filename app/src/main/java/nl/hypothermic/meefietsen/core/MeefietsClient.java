@@ -10,8 +10,10 @@ import nl.hypothermic.meefietsen.ResponseCode;
 import nl.hypothermic.meefietsen.async.GenericCallback;
 import nl.hypothermic.meefietsen.async.MessagedCallback;
 import nl.hypothermic.mfsrv.obj.NetArrayList;
+import nl.hypothermic.mfsrv.obj.NetWrappedObject;
 import nl.hypothermic.mfsrv.obj.account.Account;
 import nl.hypothermic.mfsrv.obj.auth.TelephoneNum;
+import nl.hypothermic.mfsrv.obj.event.Event;
 
 public class MeefietsClient {
 
@@ -242,6 +244,107 @@ public class MeefietsClient {
                         }
                     }
                 });
+            }
+        });
+    }
+
+    public void getEvents(final GenericCallback<NetResponse<NetArrayList<Integer>>> cb) {
+        threadpool.execute(new Runnable() {
+            @Override
+            public void run() {
+                final NetResponse<NetArrayList<Integer>> res = new NetResponse<>();
+                isAuthenticated(new GenericCallback<Boolean>() {
+                    @Override
+                    public void onAction(Boolean val) {
+                        if (val != null && val) {
+                            String ret = netman.exec("account/events/get?", null);
+                            System.out.println("GETEVTS RET: " + ret);
+                            if (ret.startsWith("1")) {
+                                try {
+                                    res.object = NetArrayList.fromSerializedString(ret.substring(1));
+                                    res.code = ResponseCode.SUCCESS;
+                                } catch (Exception x) {
+                                    x.printStackTrace();
+                                    res.code = ResponseCode.INTERNAL_ERR_GENERIC;
+                                }
+                            }
+                        } else {
+                            res.code = ResponseCode.INTERNAL_ERR_NOT_AUTH;
+                        }
+                        cb.onAction(res);
+                    }
+                });
+            }
+        });
+    }
+
+    public void getEvent(final Integer id, final GenericCallback<NetResponse<Event>> cb) {
+        threadpool.execute(new Runnable() {
+            @Override
+            public void run() {
+                final NetResponse<Event> res = new NetResponse<>();
+                isAuthenticated(new GenericCallback<Boolean>() {
+                    @Override
+                    public void onAction(Boolean val) {
+                        if (val != null && val) {
+                            String ret = netman.exec("event/get?", new HashMap<String, String>() {{
+                                put("id", id + "");
+                            }});
+                            System.out.println("GETEVT RET: " + ret);
+                            if (ret.startsWith("1")) {
+                                try {
+                                    res.object = Event.fromSerializedString(ret.substring(1));
+                                    res.code = ResponseCode.SUCCESS;
+                                } catch (Exception x) {
+                                    x.printStackTrace();
+                                    res.code = ResponseCode.INTERNAL_ERR_GENERIC;
+                                }
+                            }
+                        } else {
+                            res.code = ResponseCode.INTERNAL_ERR_NOT_AUTH;
+                        }
+                        cb.onAction(res);
+                    }
+                });
+            }
+        });
+    }
+
+    public void createEvent(final int type, final String name, final String loc, final long time, final GenericCallback<NetResponse<NetWrappedObject>> cb) {
+        threadpool.execute(new Runnable() {
+            @Override
+            public void run() {
+                final NetResponse<NetWrappedObject> netres = new NetResponse<>();
+                int res = Integer.valueOf(netman.exec("event/create?", new HashMap<String, String>() {{
+                    put("type", type + "");
+                    put("name", name);
+                    put("loc", loc);
+                    put("time", time + "");
+                }}).trim());
+                System.out.println("EVT CREATE RES:" + res);
+                if (res >= 0) {
+                    netres.code = ResponseCode.SUCCESS;
+                    netres.object = new NetWrappedObject<Integer>(res);
+                } else {
+                    // FIXME
+                    netres.code = ResponseCode.ERR_GENERIC;
+                }
+                cb.onAction(netres);
+            }
+        });
+    }
+
+    public void eventAddUser(final int eventId, final TelephoneNum user, final GenericCallback<Boolean> cb) {
+        threadpool.execute(new Runnable() {
+            @Override
+            public void run() {
+                int res = Integer.valueOf(netman.exec("event/adduser?", new HashMap<String, String>() {{
+                    put("id", eventId + "");
+                    put("targetcountry", user.country + "");
+                    put("targetnum", user.number + "");
+                }}).trim());
+                System.out.println("EVT ADD USER RES:" + res);
+                cb.onAction(res == 1);
             }
         });
     }

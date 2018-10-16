@@ -39,7 +39,7 @@ public class ContactsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         FeedActivity.act.setContactsFragment(this);
 
-        RecyclerView contacts = FeedActivity.act.findViewById(R.id.contacts_view);
+        final RecyclerView contacts = FeedActivity.act.findViewById(R.id.contacts_view);
         contacts.setLayoutManager(new LinearLayoutManager(FeedActivity.act.getBaseContext()));
         contacts.setAdapter(new ContactsViewAdapter(ClientContactManager.getInstance().getContacts()));
 
@@ -48,15 +48,30 @@ public class ContactsFragment extends Fragment {
             public void onAction(NetResponse<NetArrayList<TelephoneNum>> val) {
                 if (val != null) {
                     if (val.code == ResponseCode.SUCCESS && val.object != null) {
-                        for (TelephoneNum num : val.object) {
+                        ClientContactManager.getInstance().clearContacts();
+                        // TODO dit kan beter gedaan worden... er hoeven niet duizenden threads aangemaakt te worden!!
+                        final GenericCallback<Void> cb = new GenericCallback<Void>() {
+                            @Override
+                            public void onAction(Void val) {
+                                System.out.println("CTS UPDATE UI");
+                                FeedActivity.act.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        contacts.getAdapter().notifyDataSetChanged();
+                                    }
+                                });
+                            }
+                        };
+                        for (Object num : val.object) {
                             System.out.println("REC CONTACT: " + num.toString());
-                            MeefietsClient.getInstance().getAccount(num, new GenericCallback<NetResponse<Account>>() {
+                            MeefietsClient.getInstance().getAccount((TelephoneNum) num, new GenericCallback<NetResponse<Account>>() {
                                 @Override
                                 public void onAction(NetResponse<Account> val) {
                                     if (val != null) {
                                         if (val.code == ResponseCode.SUCCESS && val.object != null) {
                                             System.out.println("REC CONTACT ACC: " + val.toString());
                                             ClientContactManager.getInstance().addContact(val.object);
+                                            cb.onAction(null);
                                         } else {
                                             System.out.println("Failed to update contacts: invalid account container");
                                         }

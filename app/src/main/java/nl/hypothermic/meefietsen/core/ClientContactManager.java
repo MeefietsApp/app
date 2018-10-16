@@ -44,4 +44,8 @@ public class ClientContactManager {
     public ArrayList<Account> getContacts() {
         return contacts;
     }
+
+    public void clearContacts() {
+        contacts.clear();
+    }
 }

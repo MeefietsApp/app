@@ -7,8 +7,9 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import nl.hypothermic.meefietsen.core.FileIO;
+import nl.hypothermic.meefietsen.obj.NetworkObject;
 
-public abstract class Event implements Serializable {
+public abstract class Event implements Serializable, NetworkObject {
 
 	static final long serialVersionUID = 1L;
 
