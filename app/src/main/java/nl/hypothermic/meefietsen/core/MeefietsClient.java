@@ -221,6 +221,42 @@ public class MeefietsClient {
         });
     }
 
+    public void addContact(final TelephoneNum target, final GenericCallback<Boolean> cb) {
+        threadpool.execute(new Runnable() {
+            @Override
+            public void run() {
+                isAuthenticated(new GenericCallback<Boolean>() {
+                    @Override
+                    public void onAction(Boolean val) {
+                        if (val != null && val) {
+                            String ret = netman.exec("account/contacts/add?", new HashMap<String, String>() {{
+                                put("targetcountry", target.country + "");
+                                put("targetnum", target.number + "");
+                            }});
+                            System.out.println("ADDCONTACT RET: " + ret);
+                            boolean succeeded = (ret.trim().equals("1"));
+                            cb.onAction(succeeded);
+                            if (succeeded) {
+                                MeefietsClient.getInstance().getAccount(target, new GenericCallback<NetResponse<Account>>() {
+                                    @Override
+                                    public void onAction(NetResponse<Account> val) {
+                                        if (val != null && val.code == ResponseCode.SUCCESS && val.object != null) {
+                                            System.out.println("1\n");
+                                            //ClientContactManager.getInstance().addContact(val.object);
+                                        }
+                                        System.out.println("2\n");
+                                    }
+                                });
+                            }
+                        } else {
+                            cb.onAction(false);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
     public void deleteContact(final TelephoneNum target, final GenericCallback<Boolean> cb) {
         threadpool.execute(new Runnable() {
             @Override

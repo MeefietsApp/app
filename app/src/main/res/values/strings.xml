@@ -27,8 +27,8 @@
     <string name="dialog_std_inputsmalltext_positive">OK</string>
     <string name="dialog_std_inputsmalltext_negative">Cancel</string>
     <string name="activity_account_manage_name_title">Change your username</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="interact_contacts_add_incorrect_number">Incorrect phone number.</string>
+    <string name="interact_contacts_update_failed">Failed to retrieve contacts</string>
+    <string name="interact_contacts_add_error">Error when adding contact.</string>
 
 </resources>

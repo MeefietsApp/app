@@ -7,6 +7,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import nl.hypothermic.meefietsen.async.GenericCallback;
 import nl.hypothermic.meefietsen.core.MeefietsClient;
@@ -18,6 +19,10 @@ public class FeedActivity extends AppCompatActivity {
 
     // FIXME: dit is niet de beste manier om dit te doen...
     public static FeedActivity act;
+
+    public static void showToast(String msg) {
+        Toast.makeText(act, msg, Toast.LENGTH_LONG).show();
+    }
 
     public void setAccountFragment(AccountFragment accountFragment) {
         this.accountFragment = accountFragment;

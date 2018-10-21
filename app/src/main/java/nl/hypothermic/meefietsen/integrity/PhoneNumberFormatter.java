@@ -15,15 +15,15 @@ public class PhoneNumberFormatter {
 
             // Verenigde Staten (+1)
             if (userInput.length() == 12 &&
-                    userInput.charAt(2) == '1') {
+                    userInput.charAt(1) == '1') {
                 return new TelephoneNum(1, Integer.valueOf(userInput.substring(2)));
             }
 
             // Nederland (+31)
             if (userInput.length() == 12 &&
-                    userInput.charAt(2) == '3' &&
-                    userInput.charAt(3) == '1' &&
-                    userInput.charAt(4) == '6') {
+                    userInput.charAt(1) == '3' &&
+                    userInput.charAt(2) == '1' &&
+                    userInput.charAt(3) == '6') {
                 return new TelephoneNum(31, Integer.valueOf(userInput.substring(3)));
             }
 

@@ -23,5 +23,8 @@
     <string name="dialog_std_inputsmalltext_positive">OK</string>
     <string name="dialog_std_inputsmalltext_negative">Annuleren</string>
     <string name="activity_account_manage_name_title">Verander uw gebruikersnaam</string>
+    <string name="interact_contacts_add_incorrect_number">Incorrect telefoonnummer.</string>
+    <string name="interact_contacts_update_failed">Fout bij het ophalen van uw contacten.</string>
+    <string name="interact_contacts_add_error">Fout bij het toevoegen van een nieuw contact.</string>
 
 </resources>
