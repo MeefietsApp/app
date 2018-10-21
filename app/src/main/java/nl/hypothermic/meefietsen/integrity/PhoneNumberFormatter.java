@@ -16,7 +16,7 @@ public class PhoneNumberFormatter {
             // Verenigde Staten (+1)
             if (userInput.length() == 12 &&
                     userInput.charAt(2) == '1') {
-                return new TelephoneNum(1, Integer.valueOf(userInput.substring(3)));
+                return new TelephoneNum(1, Integer.valueOf(userInput.substring(2)));
             }
 
             // Nederland (+31)
@@ -24,13 +24,13 @@ public class PhoneNumberFormatter {
                     userInput.charAt(2) == '3' &&
                     userInput.charAt(3) == '1' &&
                     userInput.charAt(4) == '6') {
-                return new TelephoneNum(31, Integer.valueOf(userInput.substring(4)));
+                return new TelephoneNum(31, Integer.valueOf(userInput.substring(3)));
             }
 
             // TODO meer landen...
 
         } else if (userInput.startsWith("06") && userInput.length() == 10) {
-            return new TelephoneNum(31, Integer.valueOf(userInput.substring(2)));
+            return new TelephoneNum(31, Integer.valueOf(userInput.substring(1)));
         }
 
         throw new PhoneNumberParseException(userInput);
