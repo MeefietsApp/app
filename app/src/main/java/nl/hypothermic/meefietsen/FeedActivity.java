@@ -20,8 +20,13 @@ public class FeedActivity extends AppCompatActivity {
     // FIXME: dit is niet de beste manier om dit te doen...
     public static FeedActivity act;
 
-    public static void showToast(String msg) {
-        Toast.makeText(act, msg, Toast.LENGTH_LONG).show();
+    public static void showToast(final String msg) {
+        act.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(act, msg, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     public void setAccountFragment(AccountFragment accountFragment) {
