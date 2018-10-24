@@ -17,7 +17,7 @@
     <string name="activity_register_proceed" >Registreren</string>
     <string name="activity_register_legal" >Door te registreren gaat u akkoord met <font color="blue">MeefietsApp Servicevoorwaarden</font> en <font color="blue">Hypothermic TOS</font>. Ook erkent u dat u 16 jaar of ouder bent. <i>Klik hier om gerelateerde documenten te openen</i></string>
     <string name="activity_verify_title" >Verifieer Account</string>
-    <string name="activity_verify_introduction" >Een SMS was verstuurd naar uw telfoonnummer. Voer de 6-cijferige verificatiecode hieronder in:</string>
+    <string name="activity_verify_introduction" >Een SMS was verstuurd naar uw telefoonnummer. Voer de 5-cijferige verificatiecode hieronder in:</string>
     <string name="activity_verify_proceed" >Verifieer</string>
     <string name="dialog_std_inputsmalltext_title">Voer tekst in</string>
     <string name="dialog_std_inputsmalltext_positive">OK</string>
@@ -26,5 +26,7 @@
     <string name="interact_contacts_add_incorrect_number">Incorrect telefoonnummer.</string>
     <string name="interact_contacts_update_failed">Fout bij het ophalen van uw contacten.</string>
     <string name="interact_contacts_add_error">Fout bij het toevoegen van een nieuw contact.</string>
+    <string name="interact_events_invite_error">Fout bij het uitnodigen voor het evenement.</string>
+    <string name="interact_events_invite_success">Gebruiker toegevoegd aan evenement.</string>
 
 </resources>

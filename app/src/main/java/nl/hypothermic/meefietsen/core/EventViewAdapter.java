@@ -6,14 +6,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
+import nl.hypothermic.meefietsen.FeedActivity;
 import nl.hypothermic.meefietsen.R;
+import nl.hypothermic.meefietsen.async.GenericCallback;
+import nl.hypothermic.meefietsen.dialogs.EventCreateDialog;
+import nl.hypothermic.meefietsen.integrity.PhoneNumberFormatter;
+import nl.hypothermic.mfsrv.obj.auth.TelephoneNum;
 import nl.hypothermic.mfsrv.obj.event.Event;
 import nl.hypothermic.mfsrv.obj.event.MeefietsEvent;
 
@@ -35,6 +43,9 @@ public class EventViewAdapter<T extends Event> extends RecyclerView.Adapter<Even
         public TextView eventTime;
         public TextView eventDate;
 
+        public LinearLayout options;
+        public ImageView optionAdd;
+
         public EventViewHolder(View view) {
             super(view);
             card = view.findViewById(R.id.card);
@@ -42,6 +53,9 @@ public class EventViewAdapter<T extends Event> extends RecyclerView.Adapter<Even
             eventLocation = view.findViewById(R.id.event_loc);
             eventTime = view.findViewById(R.id.event_time);
             eventDate = view.findViewById(R.id.event_date);
+
+            options = view.findViewById(R.id.options);
+            optionAdd = view.findViewById(R.id.option_add);
         }
 
         public void setTime(String formattedTime) {
@@ -68,7 +82,7 @@ public class EventViewAdapter<T extends Event> extends RecyclerView.Adapter<Even
 
     @Override
     public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
-        Event e = events.get(position);
+        final Event e = events.get(position);
         holder.eventName.setText(e.getIdentifier());
         if (events.get(position) instanceof MeefietsEvent) {
             MeefietsEvent me = (MeefietsEvent) e;
@@ -82,6 +96,46 @@ public class EventViewAdapter<T extends Event> extends RecyclerView.Adapter<Even
                 holder.setTime(shortDateFormat.format(date));
                 holder.setDate(ddmmDateFormat.format(date));
             }
+            holder.optionAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    (FeedActivity.act.findViewById(R.id.fab_contact_add)).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            new EventCreateDialog<>(new GenericCallback<HashMap<String, String>>() {
+                                @Override
+                                public void onAction(final HashMap<String, String> val) {
+                                    TelephoneNum target;
+                                    try {
+                                        target = PhoneNumberFormatter.toTelephoneNum(val.get("num"));
+                                    } catch (PhoneNumberFormatter.PhoneNumberParseException e) {
+                                        FeedActivity.showToast(FeedActivity.act.getString(R.string.interact_contacts_add_incorrect_number));
+                                        e.printStackTrace();
+                                        return;
+                                    }
+                                    MeefietsClient.getInstance().eventAddUser(e.eventId, target, new GenericCallback<Boolean>() {
+                                        @Override
+                                        public void onAction(Boolean val) {
+                                            if (val != null && val) {
+                                                FeedActivity.showToast(FeedActivity.act.getString(R.string.interact_events_invite_success));
+                                            } else {
+                                                FeedActivity.showToast(FeedActivity.act.getString(R.string.interact_events_invite_error));
+                                            }
+                                        }
+                                    });
+                                }
+                                // TODO: lokaliseren
+                            }).setTitle("Invite contact")
+                                    .setPosNegBtns("Invite", "Cancel")
+                                    .addField("num", "Phone Number")
+                                    .onCreateDialog(null)
+                                    .show();
+                        }
+                    });
+                }
+            });
+        } else {
+            holder.options.setLayoutParams(new LinearLayout.LayoutParams(holder.options.getLayoutParams().width, 0));
         }
     }
 

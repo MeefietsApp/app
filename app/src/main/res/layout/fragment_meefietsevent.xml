@@ -18,7 +18,9 @@
             android:layout_height="wrap_content"
             android:background="@drawable/card_shape"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:paddingRight="16dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -95,6 +97,24 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/strWelcomeTitle" />
+
+            <LinearLayout
+                android:id="@+id/options"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <ImageView
+                    android:id="@+id/option_add"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:contentDescription="Invite contacts"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="10dp"
+                    app:srcCompat="@drawable/ic_group_add_black_24dp" />
+            </LinearLayout>
 
         </LinearLayout>
 

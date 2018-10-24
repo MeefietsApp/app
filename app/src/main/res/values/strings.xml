@@ -30,5 +30,7 @@
     <string name="interact_contacts_add_incorrect_number">Incorrect phone number.</string>
     <string name="interact_contacts_update_failed">Failed to retrieve contacts</string>
     <string name="interact_contacts_add_error">Error when adding contact.</string>
+    <string name="interact_events_invite_error">Failed to invite contact to the event.</string>
+    <string name="interact_events_invite_success">Successfully added user to event.</string>
 
 </resources>
