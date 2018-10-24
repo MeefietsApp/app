@@ -99,39 +99,34 @@ public class EventViewAdapter<T extends Event> extends RecyclerView.Adapter<Even
             holder.optionAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    (FeedActivity.act.findViewById(R.id.fab_contact_add)).setOnClickListener(new View.OnClickListener() {
+                    new EventCreateDialog<>(new GenericCallback<HashMap<String, String>>() {
                         @Override
-                        public void onClick(View v) {
-                            new EventCreateDialog<>(new GenericCallback<HashMap<String, String>>() {
+                        public void onAction(final HashMap<String, String> val) {
+                            TelephoneNum target;
+                            try {
+                                target = PhoneNumberFormatter.toTelephoneNum(val.get("num"));
+                            } catch (PhoneNumberFormatter.PhoneNumberParseException e) {
+                                FeedActivity.showToast(FeedActivity.act.getString(R.string.interact_contacts_add_incorrect_number));
+                                e.printStackTrace();
+                                return;
+                            }
+                            MeefietsClient.getInstance().eventAddUser(e.eventId, target, new GenericCallback<Boolean>() {
                                 @Override
-                                public void onAction(final HashMap<String, String> val) {
-                                    TelephoneNum target;
-                                    try {
-                                        target = PhoneNumberFormatter.toTelephoneNum(val.get("num"));
-                                    } catch (PhoneNumberFormatter.PhoneNumberParseException e) {
-                                        FeedActivity.showToast(FeedActivity.act.getString(R.string.interact_contacts_add_incorrect_number));
-                                        e.printStackTrace();
-                                        return;
+                                public void onAction(Boolean val) {
+                                    if (val != null && val) {
+                                        FeedActivity.showToast(FeedActivity.act.getString(R.string.interact_events_invite_success));
+                                    } else {
+                                        FeedActivity.showToast(FeedActivity.act.getString(R.string.interact_events_invite_error));
                                     }
-                                    MeefietsClient.getInstance().eventAddUser(e.eventId, target, new GenericCallback<Boolean>() {
-                                        @Override
-                                        public void onAction(Boolean val) {
-                                            if (val != null && val) {
-                                                FeedActivity.showToast(FeedActivity.act.getString(R.string.interact_events_invite_success));
-                                            } else {
-                                                FeedActivity.showToast(FeedActivity.act.getString(R.string.interact_events_invite_error));
-                                            }
-                                        }
-                                    });
                                 }
-                                // TODO: lokaliseren
-                            }).setTitle("Invite contact")
-                                    .setPosNegBtns("Invite", "Cancel")
-                                    .addField("num", "Phone Number")
-                                    .onCreateDialog(null)
-                                    .show();
+                            });
                         }
-                    });
+                        // TODO: lokaliseren
+                    }).setTitle("Invite contact")
+                            .setPosNegBtns("Invite", "Cancel")
+                            .addField("num", "Phone Number")
+                            .onCreateDialog(null)
+                            .show();
                 }
             });
         } else {
