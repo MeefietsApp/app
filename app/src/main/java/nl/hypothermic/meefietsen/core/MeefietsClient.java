@@ -27,7 +27,8 @@ public class MeefietsClient {
     }
 
     //public static final String url = "http://149.202.45.240:7000/"; // temp fix voor dns propagation
-    public static final String url = "http://api.hypothermic.nl:7000/";
+    public static final boolean useHttps = true;
+    public static final String url = (useHttps ? "https" : "http") + "://api.hypothermic.nl:" + (useHttps ? "7443" : "7000") + "/";
 
     private ExecutorService threadpool = Executors.newCachedThreadPool();
     private NetManager netman;
