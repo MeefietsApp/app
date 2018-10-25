@@ -28,5 +28,13 @@
     <string name="interact_contacts_add_error">Fout bij het toevoegen van een nieuw contact.</string>
     <string name="interact_events_invite_error">Fout bij het uitnodigen voor het evenement.</string>
     <string name="interact_events_invite_success">Gebruiker toegevoegd aan evenement.</string>
+    <string name="dialog_std_userinvite_title">Voeg een gebruiker toe</string>
+    <string name="dialog_std_userinvite_positive">Toevoegen</string>
+    <string name="dialog_std_userinvite_negative">Annuleren</string>
+    <string name="dialog_std_userinvite_field_number">Telefoonnummer</string>
+    <string name="dialog_std_contactadd_title">Contact toevoegen</string>
+    <string name="dialog_std_contactadd_positive">Toevoegen</string>
+    <string name="dialog_std_contactadd_negative">Annuleren</string>
+    <string name="dialog_std_contactadd_field_number">Telefoonnummer</string>
 
 </resources>

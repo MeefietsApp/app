@@ -79,9 +79,11 @@ public class ContactsFragment extends Fragment {
 
                     }
                 // TODO: lokaliseren
-                }).setTitle("Add contact")
-                    .setPosNegBtns("Add", "Cancel")
-                    .addField("num", "Phone Number")
+                }).setTitle(FeedActivity.act.getString(R.string.dialog_std_contactadd_title))
+                    .setPosNegBtns(FeedActivity.act.getString(R.string.dialog_std_contactadd_positive),
+                                   FeedActivity.act.getString(R.string.dialog_std_contactadd_negative))
+                    .addField("num",
+                              FeedActivity.act.getString(R.string.dialog_std_contactadd_field_number))
                     .onCreateDialog(null)
                     .show();
             }

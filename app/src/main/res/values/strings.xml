@@ -32,5 +32,13 @@
     <string name="interact_contacts_add_error">Error when adding contact.</string>
     <string name="interact_events_invite_error">Failed to invite contact to the event.</string>
     <string name="interact_events_invite_success">Successfully added user to event.</string>
+    <string name="dialog_std_userinvite_title">Invite a user</string>
+    <string name="dialog_std_userinvite_positive">Invite</string>
+    <string name="dialog_std_userinvite_negative">Cancel</string>
+    <string name="dialog_std_userinvite_field_number">Phone number</string>
+    <string name="dialog_std_contactadd_title">Add contact</string>
+    <string name="dialog_std_contactadd_positive">Add</string>
+    <string name="dialog_std_contactadd_negative">Cancel</string>
+    <string name="dialog_std_contactadd_field_number">Phone number</string>
 
 </resources>

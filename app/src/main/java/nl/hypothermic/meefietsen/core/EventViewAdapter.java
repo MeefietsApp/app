@@ -121,10 +121,10 @@ public class EventViewAdapter<T extends Event> extends RecyclerView.Adapter<Even
                                 }
                             });
                         }
-                        // TODO: lokaliseren
-                    }).setTitle("Invite contact")
-                            .setPosNegBtns("Invite", "Cancel")
-                            .addField("num", "Phone Number")
+                    }).setTitle(FeedActivity.act.getString(R.string.dialog_std_userinvite_title))
+                            .setPosNegBtns(FeedActivity.act.getString(R.string.dialog_std_userinvite_positive),
+                                           FeedActivity.act.getString(R.string.dialog_std_userinvite_negative))
+                            .addField("num", FeedActivity.act.getString(R.string.dialog_std_userinvite_field_number))
                             .onCreateDialog(null)
                             .show();
                 }
