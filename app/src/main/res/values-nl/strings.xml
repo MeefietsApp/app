@@ -36,5 +36,8 @@
     <string name="dialog_std_contactadd_positive">Toevoegen</string>
     <string name="dialog_std_contactadd_negative">Annuleren</string>
     <string name="dialog_std_contactadd_field_number">Telefoonnummer</string>
+    <string name="dialog_std_serverunreachable_title">Geen verbinding mogelijk</string>
+    <string name="dialog_std_serverunreachable_positive">Afsluiten</string>
+    <string name="dialog_std_serverunreachable_negative">Negeren</string>
 
 </resources>

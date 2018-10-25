@@ -40,5 +40,8 @@
     <string name="dialog_std_contactadd_positive">Add</string>
     <string name="dialog_std_contactadd_negative">Cancel</string>
     <string name="dialog_std_contactadd_field_number">Phone number</string>
+    <string name="dialog_std_serverunreachable_title">Server not reachable</string>
+    <string name="dialog_std_serverunreachable_positive">Exit</string>
+    <string name="dialog_std_serverunreachable_negative">Ignore</string>
 
 </resources>
