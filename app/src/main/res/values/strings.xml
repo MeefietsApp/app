@@ -43,5 +43,7 @@
     <string name="dialog_std_serverunreachable_title">Server not reachable</string>
     <string name="dialog_std_serverunreachable_positive">Exit</string>
     <string name="dialog_std_serverunreachable_negative">Ignore</string>
+    <string name="interact_events_delete_error">Failed to delete event</string>
+    <string name="interact_events_delete_success">Successfully deleted event.</string>
 
 </resources>

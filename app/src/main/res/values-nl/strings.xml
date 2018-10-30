@@ -39,5 +39,7 @@
     <string name="dialog_std_serverunreachable_title">Geen verbinding mogelijk</string>
     <string name="dialog_std_serverunreachable_positive">Afsluiten</string>
     <string name="dialog_std_serverunreachable_negative">Negeren</string>
+    <string name="interact_events_delete_error">Fout bij het verwijderen van evenement.</string>
+    <string name="interact_events_delete_success">Evenement verwijderd.</string>
 
 </resources>

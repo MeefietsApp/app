@@ -21,8 +21,34 @@ public class ClientEventManager {
     private ArrayList<Event> events = new ArrayList<>();
 
     public void addEvent(Event event) {
+        System.out.println("#### ADDING EVENT: " + event.eventId + " " + event.getIdentifier());
         events.add(event);
         sort();
+    }
+
+    public class Iterator implements java.util.Iterator {
+
+        public java.util.Iterator it;
+
+        private Iterator() {
+            this.reset();
+        }
+
+        public void reset() {
+            it = instance.events.iterator();
+        }
+
+        public boolean hasNext() {
+            return it.hasNext();
+        }
+
+        public Object next() {
+            return it.next();
+        }
+    }
+
+    public Iterator getIterator() {
+        return new Iterator();
     }
 
     public void sort() {

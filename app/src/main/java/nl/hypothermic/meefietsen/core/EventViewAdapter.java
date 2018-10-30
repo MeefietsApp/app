@@ -30,10 +30,11 @@ public class EventViewAdapter<T extends Event> extends RecyclerView.Adapter<Even
     private static final DateFormat shortDateFormat = new SimpleDateFormat("HH:mm");
     private static final DateFormat ddmmDateFormat = new SimpleDateFormat("dd-MM");
 
-    private ArrayList<T> events;
+    //private ArrayList<T> events;
 
-    public EventViewAdapter(ArrayList<T> persons) {
-        this.events = persons;
+    public EventViewAdapter(/*ArrayList<T> persons*/) {
+        //this.events = persons;
+        setHasStableIds(true);
     }
 
     public static class EventViewHolder extends RecyclerView.ViewHolder {
@@ -45,6 +46,7 @@ public class EventViewAdapter<T extends Event> extends RecyclerView.Adapter<Even
 
         public LinearLayout options;
         public ImageView optionAdd;
+        public ImageView optionDel;
 
         public EventViewHolder(View view) {
             super(view);
@@ -56,6 +58,7 @@ public class EventViewAdapter<T extends Event> extends RecyclerView.Adapter<Even
 
             options = view.findViewById(R.id.options);
             optionAdd = view.findViewById(R.id.option_add);
+            optionDel = view.findViewById(R.id.option_del);
         }
 
         public void setTime(String formattedTime) {
@@ -82,9 +85,10 @@ public class EventViewAdapter<T extends Event> extends RecyclerView.Adapter<Even
 
     @Override
     public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
-        final Event e = events.get(position);
+        final Event e = ClientEventManager.getInstance().getEvents().get(position);
+        System.out.println("######### CREATE FRAG FOR " + e.eventId + " " + e.getIdentifier() + " (POS:" + position + ")");
         holder.eventName.setText(e.getIdentifier());
-        if (events.get(position) instanceof MeefietsEvent) {
+        if (ClientEventManager.getInstance().getEvents().get(position) instanceof MeefietsEvent) {
             MeefietsEvent me = (MeefietsEvent) e;
             if (me.eventLocation != null) {
                 holder.eventLocation.setText(me.eventLocation);
@@ -129,6 +133,24 @@ public class EventViewAdapter<T extends Event> extends RecyclerView.Adapter<Even
                             .show();
                 }
             });
+            holder.optionDel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    System.out.println("DELETING EVENT " + e.eventId);
+                    MeefietsClient.getInstance().eventDelUser(e.eventId, new GenericCallback<Boolean>() {
+                        @Override
+                        public void onAction(Boolean val) {
+                            if (val != null && val) {
+                                System.out.println("SUCC " + e.eventId);
+                                FeedActivity.showToast(FeedActivity.act.getString(R.string.interact_events_delete_success));
+                            } else {
+                                System.out.println("FAIL " + e.eventId);
+                                FeedActivity.showToast(FeedActivity.act.getString(R.string.interact_events_delete_error));
+                            }
+                        }
+                    });
+                }
+            });
         } else {
             holder.options.setLayoutParams(new LinearLayout.LayoutParams(holder.options.getLayoutParams().width, 0));
         }
@@ -136,6 +158,6 @@ public class EventViewAdapter<T extends Event> extends RecyclerView.Adapter<Even
 
     @Override
     public int getItemCount() {
-        return events.size();
+        return ClientEventManager.getInstance().getEvents().size();
     }
 }

@@ -103,7 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:weightSum="1">
+                android:weightSum="2">
 
                 <ImageView
                     android:id="@+id/option_add"
@@ -114,6 +114,16 @@
                     android:paddingTop="6dp"
                     android:paddingBottom="10dp"
                     app:srcCompat="@drawable/ic_group_add_black_24dp" />
+
+                <ImageView
+                    android:id="@+id/option_del"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:contentDescription="Delete event"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="10dp"
+                    app:srcCompat="@drawable/ic_close_black_24dp" />
             </LinearLayout>
 
         </LinearLayout>

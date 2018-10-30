@@ -52,7 +52,7 @@ public class HomeFragment extends Fragment {
         FeedActivity.act.setHomeFragment(this);
         final RecyclerView events = FeedActivity.act.findViewById(R.id.event_view);
         events.setLayoutManager(new LinearLayoutManager(FeedActivity.act.getBaseContext()));
-        events.setAdapter(new EventViewAdapter(ClientEventManager.getInstance().getEvents()));
+        events.setAdapter(new EventViewAdapter(/*ClientEventManager.getInstance().getEvents()*/));
 
         // TODO fix spaghetti code :)
         (FeedActivity.act.findViewById(R.id.fab_event_add)).setOnClickListener(new View.OnClickListener() {
@@ -178,7 +178,7 @@ public class HomeFragment extends Fragment {
                                 public void onAction(NetResponse<Event> val) {
                                     if (val != null) {
                                         if (val.code == ResponseCode.SUCCESS && val.object != null) {
-                                            System.out.println("REC EVENT: " + val.toString());
+                                            System.out.println("REC EVENT: " + val.object.getIdentifier());
                                             ClientEventManager.getInstance().addEvent(val.object);
                                             cb.onAction(null);
                                         } else {
