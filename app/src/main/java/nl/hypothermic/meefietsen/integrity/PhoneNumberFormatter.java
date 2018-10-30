@@ -14,10 +14,10 @@ public class PhoneNumberFormatter {
         if (userInput.startsWith("+")) {
 
             // Verenigde Staten (+1)
-            if (userInput.length() == 12 &&
-                    userInput.charAt(1) == '1') {
-                return new TelephoneNum(1, Integer.valueOf(userInput.substring(2)));
-            }
+            //if (userInput.length() == 12 &&
+            //        userInput.charAt(1) == '1') {
+            //    return new TelephoneNum(1, Integer.valueOf(userInput.substring(2)));
+            //}
 
             // Nederland (+31)
             if (userInput.length() == 12 &&
@@ -27,7 +27,7 @@ public class PhoneNumberFormatter {
                 return new TelephoneNum(31, Integer.valueOf(userInput.substring(3)));
             }
 
-            // TODO meer landen...
+            // TODO meer landen (_als_ de app viral gaat :))...
 
         } else if (userInput.startsWith("06") && userInput.length() == 10) {
             return new TelephoneNum(31, Integer.valueOf(userInput.substring(1)));
