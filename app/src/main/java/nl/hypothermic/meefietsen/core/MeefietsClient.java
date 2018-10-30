@@ -385,4 +385,19 @@ public class MeefietsClient {
             }
         });
     }
+
+    public void eventDelUser(final int eventId, final GenericCallback<Boolean> cb) {
+        threadpool.execute(new Runnable() {
+            @Override
+            public void run() {
+                int res = Integer.valueOf(netman.exec("event/deluser?", new HashMap<String, String>() {{
+                    put("id", eventId + "");
+                    put("targetcountry", localAccount.num.country + "");
+                    put("targetnum", localAccount.num.number + "");
+                }}).trim());
+                System.out.println("EVT DEL USER RES:" + res);
+                cb.onAction(res == 1);
+            }
+        });
+    }
 }
