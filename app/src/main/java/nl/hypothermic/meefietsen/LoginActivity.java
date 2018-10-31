@@ -41,7 +41,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     final String input = Hashing.sha512().hashString(((EditText) findViewById(R.id.fieldLoginPassword)).getText().toString(), StandardCharsets.UTF_8).toString();
-                    System.out.println("---INPUT: " + input);
                     MeefietsClient.getInstance().doLogin(input, new GenericCallback<Boolean>() {
                         @Override
                         public void onAction(Boolean val) {

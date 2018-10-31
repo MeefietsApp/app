@@ -57,7 +57,6 @@ public class WelcomeActivity extends AppCompatActivity {
                                         }
                                     });
                                 }
-                                System.out.println("--->" + res);
                             }
                         } catch (NumberFormatException nfe) {
                             nfe.printStackTrace();

@@ -70,7 +70,6 @@ public class MeefietsClient {
     public boolean doLoginSynchronously(final String passwd) {
         this.netman.setPassword(passwd);
         netman.sessionToken = netman.exec("auth/login?", null).trim() + "";
-        System.out.println("------> SYNC SES TOKEN: " + netman.sessionToken + " LEN: " + (netman.sessionToken.trim().length() > 5));
         return netman.sessionToken.trim().length() > 5;
     }
 
@@ -202,7 +201,6 @@ public class MeefietsClient {
                     public void onAction(Boolean val) {
                         if (val != null && val) {
                             String ret = netman.exec("account/contacts/get?", null);
-                            System.out.println("GETCTL RET: " + ret);
                             if (ret.startsWith("1")) {
                                 try {
                                     res.object = NetArrayList.fromSerializedString(ret.substring(1));
@@ -234,7 +232,6 @@ public class MeefietsClient {
                                 put("targetcountry", target.country + "");
                                 put("targetnum", target.number + "");
                             }});
-                            System.out.println("ADDCONTACT RET: " + ret);
                             boolean succeeded = (ret.trim().equals("1"));
                             cb.onAction(succeeded);
                             if (succeeded) {
@@ -270,7 +267,6 @@ public class MeefietsClient {
                                 put("targetcountry", target.country + "");
                                 put("targetnum", target.number + "");
                             }});
-                            System.out.println("DELCONTACT RET: " + ret);
                             boolean succeeded = (ret.trim().equals("1"));
                             cb.onAction(succeeded);
                             if (succeeded) {
@@ -295,7 +291,6 @@ public class MeefietsClient {
                     public void onAction(Boolean val) {
                         if (val != null && val) {
                             String ret = netman.exec("account/events/get?", null);
-                            System.out.println("GETEVTS RET: " + ret);
                             if (ret.startsWith("1")) {
                                 try {
                                     res.object = NetArrayList.fromSerializedString(ret.substring(1));
@@ -327,7 +322,6 @@ public class MeefietsClient {
                             String ret = netman.exec("event/get?", new HashMap<String, String>() {{
                                 put("id", id + "");
                             }});
-                            System.out.println("GETEVT RET: " + ret);
                             if (ret.startsWith("1")) {
                                 try {
                                     res.object = Event.fromSerializedString(ret.substring(1));
@@ -358,7 +352,6 @@ public class MeefietsClient {
                     put("loc", loc);
                     put("time", time + "");
                 }}).trim());
-                System.out.println("EVT CREATE RES:" + res);
                 if (res >= 0) {
                     netres.code = ResponseCode.SUCCESS;
                     netres.object = new NetWrappedObject<Integer>(res);
@@ -380,7 +373,6 @@ public class MeefietsClient {
                     put("targetcountry", user.country + "");
                     put("targetnum", user.number + "");
                 }}).trim());
-                System.out.println("EVT ADD USER RES:" + res);
                 cb.onAction(res == 1);
             }
         });
@@ -395,7 +387,6 @@ public class MeefietsClient {
                     put("targetcountry", localAccount.num.country + "");
                     put("targetnum", localAccount.num.number + "");
                 }}).trim());
-                System.out.println("EVT DEL USER RES:" + res);
                 cb.onAction(res == 1);
             }
         });

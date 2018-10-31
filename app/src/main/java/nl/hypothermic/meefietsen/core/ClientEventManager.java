@@ -21,7 +21,6 @@ public class ClientEventManager {
     private ArrayList<Event> events = new ArrayList<>();
 
     public void addEvent(Event event) {
-        System.out.println("#### ADDING EVENT: " + event.eventId + " " + event.getIdentifier());
         events.add(event);
         sort();
     }

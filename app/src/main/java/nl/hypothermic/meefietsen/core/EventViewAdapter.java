@@ -27,6 +27,8 @@ import nl.hypothermic.mfsrv.obj.event.MeefietsEvent;
 
 public class EventViewAdapter<T extends Event> extends RecyclerView.Adapter<EventViewAdapter.EventViewHolder> {
 
+    private static RecyclerView.Adapter inst;
+
     private static final DateFormat shortDateFormat = new SimpleDateFormat("HH:mm");
     private static final DateFormat ddmmDateFormat = new SimpleDateFormat("dd-MM");
 
@@ -34,6 +36,7 @@ public class EventViewAdapter<T extends Event> extends RecyclerView.Adapter<Even
 
     public EventViewAdapter(/*ArrayList<T> persons*/) {
         //this.events = persons;
+        inst = this;
         setHasStableIds(true);
     }
 
@@ -86,7 +89,6 @@ public class EventViewAdapter<T extends Event> extends RecyclerView.Adapter<Even
     @Override
     public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
         final Event e = ClientEventManager.getInstance().getEvents().get(position);
-        System.out.println("######### CREATE FRAG FOR " + e.eventId + " " + e.getIdentifier() + " (POS:" + position + ")");
         holder.eventName.setText(e.getIdentifier());
         if (ClientEventManager.getInstance().getEvents().get(position) instanceof MeefietsEvent) {
             MeefietsEvent me = (MeefietsEvent) e;
@@ -136,15 +138,18 @@ public class EventViewAdapter<T extends Event> extends RecyclerView.Adapter<Even
             holder.optionDel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    System.out.println("DELETING EVENT " + e.eventId);
                     MeefietsClient.getInstance().eventDelUser(e.eventId, new GenericCallback<Boolean>() {
                         @Override
                         public void onAction(Boolean val) {
                             if (val != null && val) {
-                                System.out.println("SUCC " + e.eventId);
                                 FeedActivity.showToast(FeedActivity.act.getString(R.string.interact_events_delete_success));
+                                FeedActivity.act.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        inst.notifyDataSetChanged();
+                                    }
+                                });
                             } else {
-                                System.out.println("FAIL " + e.eventId);
                                 FeedActivity.showToast(FeedActivity.act.getString(R.string.interact_events_delete_error));
                             }
                         }

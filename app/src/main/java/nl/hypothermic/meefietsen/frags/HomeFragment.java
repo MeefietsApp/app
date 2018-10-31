@@ -89,7 +89,6 @@ public class HomeFragment extends Fragment {
                                             e.printStackTrace();
                                         }
                                         long epoch = date.getTime() / 1000;
-                                        System.out.println("EPOCH: " + epoch + " FORM: " + date.toGMTString() + " STR: " + str);
                                         // hardcoded: meefietsevent!!! (zie volgende regel, 1ste arg)
                                         MeefietsClient.getInstance().createEvent(1, val.get("name"), val.get("loc"), epoch, new GenericCallback<NetResponse<NetWrappedObject>>() {
                                             @Override
@@ -162,7 +161,6 @@ public class HomeFragment extends Fragment {
                         final GenericCallback<Void> cb = new GenericCallback<Void>() {
                             @Override
                             public void onAction(Void val) {
-                                System.out.println("EVT UPDATE UI");
                                 FeedActivity.act.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -172,13 +170,11 @@ public class HomeFragment extends Fragment {
                             }
                         };
                         for (Integer id : val.object) {
-                            System.out.println("REC EVENT ID: " + id);
                             MeefietsClient.getInstance().getEvent(id, new GenericCallback<NetResponse<Event>>() {
                                 @Override
                                 public void onAction(NetResponse<Event> val) {
                                     if (val != null) {
                                         if (val.code == ResponseCode.SUCCESS && val.object != null) {
-                                            System.out.println("REC EVENT: " + val.object.getIdentifier());
                                             ClientEventManager.getInstance().addEvent(val.object);
                                             cb.onAction(null);
                                         } else {

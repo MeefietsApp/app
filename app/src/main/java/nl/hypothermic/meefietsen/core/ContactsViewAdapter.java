@@ -66,7 +66,6 @@ public class ContactsViewAdapter<T extends Account> extends RecyclerView.Adapter
                     @Override
                     public void onAction(Boolean val) {
                         if (val != null && val) {
-                            System.out.println("Delete account success!");
                             FeedActivity.act.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {

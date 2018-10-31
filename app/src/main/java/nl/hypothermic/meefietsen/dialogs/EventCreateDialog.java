@@ -69,7 +69,7 @@ public class EventCreateDialog<T> extends DialogFragment {
                 .setPositiveButton(posBtn, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         if (cb != null) {
-                            cb.onAction((T) fields); // TODO
+                            cb.onAction((T) fields);
                         }
                     }
                 })
