@@ -9,13 +9,16 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import nl.hypothermic.meefietsen.FeedActivity;
+import nl.hypothermic.meefietsen.R;
 import nl.hypothermic.meefietsen.async.GenericCallback;
 
 public class EventCreateDialog<T> extends DialogFragment {
@@ -42,6 +45,7 @@ public class EventCreateDialog<T> extends DialogFragment {
         layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         for (final Map.Entry<String, String> iter : fields.entrySet()) {
             final EditText field = new EditText(FeedActivity.act);
+            final FrameLayout container = new FrameLayout(FeedActivity.act);
             field.setHint(iter.getValue());
             field.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
             field.addTextChangedListener(new TextWatcher() {
@@ -62,7 +66,12 @@ public class EventCreateDialog<T> extends DialogFragment {
 
                 }
             });
-            layout.addView(field);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.leftMargin = 16;
+            params.rightMargin = 16;
+            field.setLayoutParams(params);
+            container.addView(field);
+            layout.addView(container);
         }
         builder.setView(layout);
         builder.setTitle(title)

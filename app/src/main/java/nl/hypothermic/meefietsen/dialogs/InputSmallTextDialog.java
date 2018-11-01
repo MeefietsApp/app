@@ -7,7 +7,9 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 
 import nl.hypothermic.meefietsen.FeedActivity;
 import nl.hypothermic.meefietsen.R;
@@ -37,14 +39,20 @@ public class InputSmallTextDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(FeedActivity.act);
-        final EditText input = new EditText(FeedActivity.act);
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
-        builder.setView(input);
+        final EditText field = new EditText(FeedActivity.act);
+        final FrameLayout container = new FrameLayout(FeedActivity.act);
+        field.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.leftMargin = 16;
+        params.rightMargin = 16;
+        field.setLayoutParams(params);
+        container.addView(field);
+        builder.setView(container);
         builder.setTitle(title)
                 .setPositiveButton(posBtn, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         if (cb != null) {
-                            cb.onAction(input.getText().toString());
+                            cb.onAction(field.getText().toString());
                         }
                     }
                 })
