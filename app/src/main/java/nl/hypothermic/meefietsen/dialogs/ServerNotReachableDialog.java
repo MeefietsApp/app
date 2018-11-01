@@ -16,15 +16,15 @@ public class ServerNotReachableDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(WelcomeActivity.act);
-        builder.setMessage(FeedActivity.act.getString(R.string.dialog_std_serverunreachable_title))
-                .setPositiveButton(FeedActivity.act.getString(R.string.dialog_std_serverunreachable_positive), new DialogInterface.OnClickListener() {
+        builder.setMessage(SplashActivity.act.getString(R.string.dialog_std_serverunreachable_title))
+                .setPositiveButton(SplashActivity.act.getString(R.string.dialog_std_serverunreachable_positive), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         SplashActivity.act.finishAffinity();
                         android.os.Process.killProcess(android.os.Process.myPid());
                         System.exit(1);
                     }
                 })
-                .setNegativeButton(FeedActivity.act.getString(R.string.dialog_std_serverunreachable_negative), new DialogInterface.OnClickListener() {
+                .setNegativeButton(SplashActivity.act.getString(R.string.dialog_std_serverunreachable_negative), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         ;
                     }
